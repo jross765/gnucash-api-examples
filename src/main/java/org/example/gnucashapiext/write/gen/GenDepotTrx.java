@@ -1,4 +1,4 @@
-package org.example.gnucashapi.write.gen.complex;
+package org.example.gnucashapiext.write.gen;
 
 import java.io.File;
 import java.time.LocalDate;

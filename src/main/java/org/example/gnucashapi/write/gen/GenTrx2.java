@@ -1,4 +1,4 @@
-package org.example.gnucashapi.write.gen.simple;
+package org.example.gnucashapi.write.gen;
 
 import java.io.File;
 import java.io.IOException;
