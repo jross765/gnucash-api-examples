@@ -5,9 +5,9 @@ import java.io.File;
 import org.gnucash.api.read.GnuCashAccount;
 import org.gnucash.api.write.GnuCashWritableAccount;
 import org.gnucash.api.write.impl.GnuCashWritableFileImpl;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrNameSpace.SecIdType;
-import org.gnucash.base.basetypes.complex.GCshCmdtyID_SecIdType;
+import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
+import org.gnucash.base.basetypes.complex.GCshSecID_SecIdType;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
 
 public class GenAcct
@@ -23,7 +23,7 @@ public class GenAcct
     
     private static String                name2        = "Depot Sparkasse";
     private static GnuCashAccount.Type   type2        = GnuCashAccount.Type.STOCK;
-    private static GCshCmdtyID_SecIdType cmdtyID2     = new GCshCmdtyID_SecIdType(SecIdType.ISIN, "DE9876543210");
+    private static GCshSecID_SecIdType   cmdtyID2     = new GCshSecID_SecIdType(GCshCmdtyNameSpace.SecIdType.ISIN, "DE9876543210");
     private static GCshAcctID            parentID2    = new GCshAcctID("7ee6fe4de6db46fd957f3513c9c6f983"); // Depots
     // END Example data
 

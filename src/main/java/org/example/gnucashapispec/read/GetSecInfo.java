@@ -1,17 +1,18 @@
-package org.example.gnucashapi.read;
+package org.example.gnucashapispec.read;
 
 import java.io.File;
 import java.util.Collection;
 
 import org.gnucash.api.read.GnuCashCommodity;
 import org.gnucash.api.read.GnuCashPrice;
-import org.gnucash.api.read.impl.GnuCashFileImpl;
+import org.gnucash.apispec.read.GnuCashSecurity;
+import org.gnucash.apispec.read.impl.GnuCashFileExtImpl;
 import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
 
 import xyz.schnorxoborx.base.beanbase.NoEntryFoundException;
 
-// Cf. org.example.gnucashapispec.read.GetSecInfo
-public class GetCmdtyInfo {
+// Cf. org.example.gnucashapi.read.GetCmdtyInfo
+public class GetSecInfo {
 
     enum Mode {
     	ISIN, 
@@ -34,7 +35,7 @@ public class GetCmdtyInfo {
 
 	public static void main(String[] args) {
 		try {
-			GetCmdtyInfo tool = new GetCmdtyInfo();
+			GetSecInfo tool = new GetSecInfo();
 			tool.kernel();
 		} catch (Exception exc) {
 			System.err.println("Execution exception. Aborting.");
@@ -44,63 +45,63 @@ public class GetCmdtyInfo {
 	}
 
 	protected void kernel() throws Exception {
-		GnuCashFileImpl gcshFile = new GnuCashFileImpl(new File(gcshFileName));
+		GnuCashFileExtImpl gcshFile = new GnuCashFileExtImpl(new File(gcshFileName));
 
-		GnuCashCommodity cmdty = null;
+		GnuCashSecurity sec = null;
 		if ( mode == Mode.ISIN ) {
-			cmdty = gcshFile.getCommodityByXCode(isin);
-			if ( cmdty == null ) {
-				System.err.println("Could not find commodities with this ISIN.");
+			sec = gcshFile.getSecurityByXCode(isin);
+			if ( sec == null ) {
+				System.err.println("Could not find securities with this ISIN.");
 				throw new NoEntryFoundException();
 			}
 		} else if ( mode == Mode.EXCHANGE_TICKER ) {
-			cmdty = gcshFile.getCommodityByQualifID(exchange, ticker);
-			if ( cmdty == null ) {
-				System.err.println("Could not find commodities with this exchange/ticker.");
+			sec = gcshFile.getSecurityByQualifID(exchange, ticker);
+			if ( sec == null ) {
+				System.err.println("Could not find securities with this exchange/ticker.");
 				throw new NoEntryFoundException();
 			}
 		} else if ( mode == Mode.NAME ) {
-			Collection<GnuCashCommodity> cmdtyList = gcshFile.getCommoditiesByName(searchName);
+			Collection<GnuCashSecurity> cmdtyList = gcshFile.getSecuritiesByName(searchName);
 			if ( cmdtyList.size() == 0 ) {
-				System.err.println("Could not find commodities matching this name.");
+				System.err.println("Could not find securities matching this name.");
 				throw new NoEntryFoundException();
 			}
 			if ( cmdtyList.size() > 1 ) {
-				System.err.println("Found several commodities with that name.");
+				System.err.println("Found several securities with that name.");
 				System.err.println("Taking first one.");
 			}
-			cmdty = cmdtyList.iterator().next(); // first element
+			sec = cmdtyList.iterator().next(); // first element
 		}
 
 		// ------------------------
 
 		try {
-			System.out.println("Qualified ID:      '" + cmdty.getQualifID() + "'");
+			System.out.println("Qualified ID:      '" + sec.getQualifID() + "'");
 		} catch (Exception exc) {
 			System.out.println("Qualified ID:      " + "ERROR");
 		}
 
 		try {
-			System.out.println("X-Code:            " + cmdty.getXCode());
+			System.out.println("X-Code:            " + sec.getXCode());
 		} catch (Exception exc) {
 			System.out.println("X-Code :           " + "ERROR");
 		}
 
 		try {
-			System.out.println("Name:              '" + cmdty.getName() + "'");
+			System.out.println("Name:              '" + sec.getName() + "'");
 		} catch (Exception exc) {
 			System.out.println("Name:              " + "ERROR");
 		}
 
 		try {
-			System.out.println("Fraction:          " + cmdty.getFraction());
+			System.out.println("Fraction:          " + sec.getFraction());
 		} catch (Exception exc) {
 			System.out.println("Fraction:          " + "ERROR");
 		}
 
 		// ---
 
-		showQuotes(cmdty);
+		showQuotes(sec);
 	}
 
 	// -----------------------------------------------------------------

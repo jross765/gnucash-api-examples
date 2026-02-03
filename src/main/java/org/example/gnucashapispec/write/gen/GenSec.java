@@ -1,15 +1,15 @@
-package org.example.gnucashapi.write.gen;
+package org.example.gnucashapispec.write.gen;
 
 import java.io.File;
 
-import org.gnucash.api.write.GnuCashWritableCommodity;
-import org.gnucash.api.write.impl.GnuCashWritableFileImpl;
+import org.gnucash.apispec.write.GnuCashWritableSecurity;
+import org.gnucash.apispec.write.impl.GnuCashWritableFileExtImpl;
 import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
 import org.gnucash.base.basetypes.complex.GCshSecID_Exchange;
 import org.gnucash.base.basetypes.complex.GCshSecID_SecIdType;
 
-// Cf. org.example.gnucashapispec.write.gen.GenSec
-public class GenCmdty {
+// Cf. org.example.gnucashapi.write.gen.GenCmdty
+public class GenSec {
     // BEGIN Example data -- adapt to your needs
     private static String gcshInFileName  = "example_in.gnucash";
     private static String gcshOutFileName = "example_out.gnucash";
@@ -28,7 +28,7 @@ public class GenCmdty {
 
     public static void main(String[] args) {
 		try {
-			GenCmdty tool = new GenCmdty();
+			GenSec tool = new GenSec();
 			tool.kernel();
 		} catch (Exception exc) {
 			System.err.println("Execution exception. Aborting.");
@@ -38,17 +38,17 @@ public class GenCmdty {
     }
 
     protected void kernel() throws Exception {
-		GnuCashWritableFileImpl gcshFile = new GnuCashWritableFileImpl(new File(gcshInFileName));
+		GnuCashWritableFileExtImpl gcshFile = new GnuCashWritableFileExtImpl(new File(gcshInFileName));
 
 		GCshSecID_Exchange qualifID1 = new GCshSecID_Exchange(sec1_exchange, sec1_ticker);
-		GnuCashWritableCommodity sec1 = gcshFile.createWritableCommodity(qualifID1, sec1_isin, sec1_name);
+		GnuCashWritableSecurity sec1 = gcshFile.createWritableSecurity(qualifID1, sec1_isin, sec1_name);
 		sec1.setXCode(sec1_isin);
-		System.out.println("Commodity no. 1 to write: " + sec1.toString());
+		System.out.println("Security no. 1 to write: " + sec1.toString());
 
 		GCshSecID_SecIdType qualifID2 = new GCshSecID_SecIdType(sec2_secIdType, sec2_isin);
-		GnuCashWritableCommodity sec2 = gcshFile.createWritableCommodity(qualifID2, sec2_isin, sec2_name);
+		GnuCashWritableSecurity sec2 = gcshFile.createWritableSecurity(qualifID2, sec2_isin, sec2_name);
 		sec2.setXCode(sec2_isin);
-		System.out.println("Commodity no. 2 to write: " + sec2.toString());
+		System.out.println("Security no. 2 to write: " + sec2.toString());
 
 		gcshFile.writeFile(new File(gcshOutFileName));
 		System.out.println("OK");
