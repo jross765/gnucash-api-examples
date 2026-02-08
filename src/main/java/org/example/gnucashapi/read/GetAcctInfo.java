@@ -93,7 +93,7 @@ public class GetAcctInfo {
 		}
 
 		try {
-			System.out.println("Cmdty/Curr:      '" + acct.getCmdtyCurrID() + "'");
+			System.out.println("Cmdty/Curr:      '" + acct.getCmdtyID() + "'");
 		} catch (Exception exc) {
 			System.out.println("Cmdty/Curr:      " + "ERROR");
 		}

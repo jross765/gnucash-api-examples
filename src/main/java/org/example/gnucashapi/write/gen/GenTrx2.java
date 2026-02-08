@@ -50,7 +50,7 @@ public class GenTrx2 {
 
 		GnuCashWritableTransaction writableTransaction = gnucashFile.createWritableTransaction();
 		writableTransaction.setDescription("check");
-		writableTransaction.setCmdtyCurrID(new GCshCurrID("EUR"));
+		writableTransaction.setCmdtyID(new GCshCurrID("EUR"));
 		writableTransaction.setDateEntered(LocalDateTime.now());
 
 		GnuCashAccount acct = null;

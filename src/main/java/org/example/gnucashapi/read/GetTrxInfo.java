@@ -49,7 +49,7 @@ public class GetTrxInfo {
 		}
 
 		try {
-			System.out.println("Cmdty/Curr:      '" + trx.getCmdtyCurrID() + "'");
+			System.out.println("Cmdty/Curr:      '" + trx.getCmdtyID() + "'");
 		} catch (Exception exc) {
 			System.out.println("Cmdty/Curr:      " + "ERROR");
 		}
