@@ -55,7 +55,7 @@ public class GetSecInfo {
 				throw new NoEntryFoundException();
 			}
 		} else if ( mode == Mode.EXCHANGE_TICKER ) {
-			sec = gcshFile.getSecurityByQualifID(exchange, ticker);
+			sec = gcshFile.getSecurityByNamSpcCode(exchange, ticker);
 			if ( sec == null ) {
 				System.err.println("Could not find securities with this exchange/ticker.");
 				throw new NoEntryFoundException();

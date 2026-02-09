@@ -54,7 +54,7 @@ public class GetCmdtyInfo {
 				throw new NoEntryFoundException();
 			}
 		} else if ( mode == Mode.EXCHANGE_TICKER ) {
-			cmdty = gcshFile.getCommodityByQualifID(exchange, ticker);
+			cmdty = gcshFile.getCommodityByNamSpcCode(exchange, ticker);
 			if ( cmdty == null ) {
 				System.err.println("Could not find commodities with this exchange/ticker.");
 				throw new NoEntryFoundException();
