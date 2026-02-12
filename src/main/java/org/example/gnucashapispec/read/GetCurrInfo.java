@@ -11,7 +11,7 @@ import xyz.schnorxoborx.base.beanbase.NoEntryFoundException;
 
 public class GetCurrInfo {
     // BEGIN Example data -- adapt to your needs
-    private static String kmmFileName = "example_in.gnucash";
+    private static String gcshFileName = "example_in.gnucash";
     private static String symbol      = "abc";
     // END Example data
 
@@ -29,7 +29,7 @@ public class GetCurrInfo {
     }
 
     protected void kernel() throws Exception {
-	GnuCashFileExtImpl gcshFile = new GnuCashFileExtImpl(new File(kmmFileName));
+	GnuCashFileExtImpl gcshFile = new GnuCashFileExtImpl(new File(gcshFileName));
 
 	GCshCurrID currID = new GCshCurrID(symbol);
 	GnuCashCurrency curr = gcshFile.getCurrencyByID(currID);
