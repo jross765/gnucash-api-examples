@@ -7,7 +7,7 @@ import org.gnucash.api.read.impl.GnuCashFileImpl;
 
 public class GetCurrTabInfo {
     // BEGIN Example data -- adapt to your needs
-    private static String gcshFileName = "example_in.xml";
+    private static String gcshFileName = "example_in.gnucash";
     // END Example data
 
     // -----------------------------------------------------------------
