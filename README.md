@@ -3,6 +3,7 @@
 ## What Does It Do?
 
 Guess what: This module contains example pograms (no, really?!).
+They demonstrate how to use the API (all levels: Core, Specialized Entities, Extensions).
 
 ## What the Programs are
 Theses programs are simple *example* programs demonstrating the correct / suggested use of the 
@@ -34,7 +35,7 @@ API library, partially replacing a user documentation that does not exist in the
 
   Test cases are where they belong to: in the 
   GnuCash 
-  API (Extensions) library module, under the directory `test`.
+  API (Core/Specialized Entities/Extensions) library module, under the directory `test`.
 
 ## How To Use Them
 Each of these programs contains a section for example data. It has to be adapted to your needs, 
@@ -73,3 +74,7 @@ https://www.gnucash.org/docs/examples/
 
 * This repository contains no history before V. 1.7 (cf. notes in parent repo).
 
+## Major Changes
+### V. 1.7.1 &rarr; 1.8
+* Changed package structure so that module dependencies are clearer.
+* Adapted to underlying modules' versions.
