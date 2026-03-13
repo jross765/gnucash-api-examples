@@ -130,6 +130,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.5.0</version>
 				<executions>
 					<execution>
 						<goals>
@@ -142,6 +143,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.8.0</version>
 				<configuration>
 					<descriptors>
 						<descriptor>src/main/assembly/test-jar-with-dependencies.xml</descriptor>
