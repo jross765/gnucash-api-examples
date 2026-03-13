@@ -12,7 +12,7 @@ import org.gnucash.api.write.impl.GnuCashWritableFileImpl;
 import org.gnucash.apiext.secacct.SecuritiesAccountTransactionManager;
 import org.gnucash.apiext.secacct.SecuritiesAccountTransactionManager.Type;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
-import org.gnucash.base.tuples.AcctIDAmountPair;
+import org.gnucash.base.tuples.AcctIDAmountFPPair;
 
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
@@ -25,7 +25,7 @@ public class GenDepotTrx {
 
 	private static GCshAcctID stockAcctID  = new GCshAcctID( "b3741e92e3b9475b9d5a2dc8254a8111" );
 	private static GCshAcctID incomeAcctID = new GCshAcctID( "d7c384bfc136464490965f3f254313b1" ); // only for dividend, not for buy/sell
-	private static List<AcctIDAmountPair> expensesAcctAmtList = new ArrayList<AcctIDAmountPair>(); // only for dividend, not for buy/sell
+	private static List<AcctIDAmountFPPair> expensesAcctAmtList = new ArrayList<AcctIDAmountFPPair>(); // only for dividend, not for buy/sell
 	private static GCshAcctID offsetAcctID = new GCshAcctID( "bbf77a599bd24a3dbfec3dd1d0bb9f5c" );
 	
 	private static FixedPointNumber nofStocks      = new FixedPointNumber(15); // only for buy/sell, not for dividend
@@ -63,7 +63,7 @@ public class GenDepotTrx {
 				System.err.println("Error: Cannot get account with ID '" + incomeAcctID + "'");
 		}
 
-		for ( AcctIDAmountPair elt : expensesAcctAmtList ) {
+		for ( AcctIDAmountFPPair elt : expensesAcctAmtList ) {
 			GnuCashAccount expensesAcct = gcshFile.getAccountByID(elt.accountID());
 			if ( expensesAcct == null )
 				System.err.println("Error: Cannot get account with ID '" + elt.accountID() + "'");
@@ -78,7 +78,7 @@ public class GenDepotTrx {
 			System.err.println("Account 2 name (income):     '" + incomeAcct.getQualifiedName() + "'");
 
 		int counter = 1;
-		for ( AcctIDAmountPair elt : expensesAcctAmtList ) {
+		for ( AcctIDAmountFPPair elt : expensesAcctAmtList ) {
 			GnuCashAccount expensesAcct = gcshFile.getAccountByID(elt.accountID());
 			System.err.println("Account 3." + counter + " name (expenses): '" + expensesAcct.getQualifiedName() + "'");
 			counter++;
@@ -125,12 +125,12 @@ public class GenDepotTrx {
 	private void initExpAccts() {
 		GCshAcctID expAcct1 = new GCshAcctID( "2a195872e24048a0a6228107ca8b6a52" ); // Kapitalertragsteuer
 		FixedPointNumber amt1 = divDistrGross.copy().multiply(new FixedPointNumber("25/100"));
-		AcctIDAmountPair acctAmtPr1 = new AcctIDAmountPair(expAcct1, amt1);
+		AcctIDAmountFPPair acctAmtPr1 = new AcctIDAmountFPPair(expAcct1, amt1);
 		expensesAcctAmtList.add(acctAmtPr1);
 		
 		GCshAcctID expAcct2 = new GCshAcctID( "41e998de2af144c7a9db5049fb677f8a" ); // Soli
 		FixedPointNumber amt2 = amt1.copy().multiply(new FixedPointNumber("55/100"));
-		AcctIDAmountPair acctAmtPr2 = new AcctIDAmountPair(expAcct2, amt2);
+		AcctIDAmountFPPair acctAmtPr2 = new AcctIDAmountFPPair(expAcct2, amt2);
 		expensesAcctAmtList.add(acctAmtPr2);
 	}
 }
