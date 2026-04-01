@@ -9,19 +9,18 @@ import org.gnucash.api.read.GnuCashAccount;
 import org.gnucash.api.read.GnuCashTransactionSplit;
 import org.gnucash.api.write.GnuCashWritableTransaction;
 import org.gnucash.api.write.impl.GnuCashWritableFileImpl;
-import org.gnucash.apiext.secacct.SecuritiesAccountTransactionManager;
-import org.gnucash.apiext.secacct.SecuritiesAccountTransactionManager.Type;
+import org.gnucash.apiext.secacct.SecuritiesAccountTransactionManager_FP;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.gnucash.base.tuples.AcctIDAmountFPPair;
 
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
-public class GenDepotTrx {
+public class GenDepotTrx_FP {
 	// BEGIN Example data -- adapt to your needs
     private static String gcshInFileName  = "example_in.gnucash";
     private static String gcshOutFileName = "example_out.gnucash";
 
-	private static SecuritiesAccountTransactionManager.Type type = Type.DIVIDEND;
+	private static SecuritiesAccountTransactionManager_FP.Type type = SecuritiesAccountTransactionManager_FP.Type.DIVIDEND;
 
 	private static GCshAcctID stockAcctID  = new GCshAcctID( "b3741e92e3b9475b9d5a2dc8254a8111" );
 	private static GCshAcctID incomeAcctID = new GCshAcctID( "d7c384bfc136464490965f3f254313b1" ); // only for dividend, not for buy/sell
@@ -40,7 +39,7 @@ public class GenDepotTrx {
 
 	public static void main(String[] args) {
 		try {
-			GenDepotTrx tool = new GenDepotTrx();
+			GenDepotTrx_FP tool = new GenDepotTrx_FP();
 			tool.kernel();
 		} catch (Exception exc) {
 			System.err.println("Execution exception. Aborting.");
@@ -90,20 +89,20 @@ public class GenDepotTrx {
 
 		GnuCashWritableTransaction trx = null;
 		initExpAccts();
-		if ( type == SecuritiesAccountTransactionManager.Type.BUY_STOCK ) {
-			trx = SecuritiesAccountTransactionManager
+		if ( type == SecuritiesAccountTransactionManager_FP.Type.BUY_STOCK ) {
+			trx = SecuritiesAccountTransactionManager_FP
 					.genBuyStockTrx(gcshFile, 
 									stockAcctID, expensesAcctAmtList, offsetAcctID,
 									nofStocks, stockPrc, 
 									datPst, descr);
-		} else if ( type == SecuritiesAccountTransactionManager.Type.DIVIDEND ) {
-			trx = SecuritiesAccountTransactionManager
+		} else if ( type == SecuritiesAccountTransactionManager_FP.Type.DIVIDEND ) {
+			trx = SecuritiesAccountTransactionManager_FP
 					.genDividDistribTrx(gcshFile,
 										stockAcctID, incomeAcctID, expensesAcctAmtList, offsetAcctID,
 										GnuCashTransactionSplit.Action.DIVIDEND, divDistrGross, datPst,
 										descr);
-		} else if ( type == SecuritiesAccountTransactionManager.Type.DISTRIBUTION ) {
-			trx = SecuritiesAccountTransactionManager
+		} else if ( type == SecuritiesAccountTransactionManager_FP.Type.DISTRIBUTION ) {
+			trx = SecuritiesAccountTransactionManager_FP
 					.genDividDistribTrx(gcshFile,
 										stockAcctID, incomeAcctID, expensesAcctAmtList, offsetAcctID,
 										GnuCashTransactionSplit.Action.DIST, divDistrGross, datPst,
