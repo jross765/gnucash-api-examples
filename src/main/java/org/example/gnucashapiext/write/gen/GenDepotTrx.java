@@ -30,7 +30,7 @@ public class GenDepotTrx {
 	
 	private static FixedPointNumber nofStocks      = new FixedPointNumber(15); // only for buy/sell, not for dividend
 	private static FixedPointNumber stockPrc       = new FixedPointNumber("23080/100"); // only for buy/sell, not for dividend
-	private static FixedPointNumber divDistrGross  = new FixedPointNumber("11223/100"); // only for dividend, not for buy/sell
+	private static FixedPointNumber divDistrGross  = new FixedPointNumber("11200/100"); // only for dividend, not for buy/sell
 
 	private static LocalDate datPst = LocalDate.of(2024, 3, 1);
 	private static String descr = "Dividend payment";
@@ -129,7 +129,7 @@ public class GenDepotTrx {
 		expensesAcctAmtList.add(acctAmtPr1);
 		
 		GCshAcctID expAcct2 = new GCshAcctID( "41e998de2af144c7a9db5049fb677f8a" ); // Soli
-		FixedPointNumber amt2 = amt1.copy().multiply(new FixedPointNumber("55/100"));
+		FixedPointNumber amt2 = amt1.copy().multiply(new FixedPointNumber("55/1000"));
 		AcctIDAmountFPPair acctAmtPr2 = new AcctIDAmountFPPair(expAcct2, amt2);
 		expensesAcctAmtList.add(acctAmtPr2);
 	}
