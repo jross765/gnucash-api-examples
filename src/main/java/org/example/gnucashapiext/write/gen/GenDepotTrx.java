@@ -118,7 +118,7 @@ public class GenDepotTrx {
 		System.out.println("OK");
 	}
 	
-	// Example for a dividend payment in Germany (domestic share).
+	// Example for taxes on a dividend payment in Germany (domestic share).
 	// If we had a foreign share (e.g. US), we would have to add a 
 	// third entry to the list: "Auslaend. Quellensteuer" (that 
 	// account is not in the test file yet).
