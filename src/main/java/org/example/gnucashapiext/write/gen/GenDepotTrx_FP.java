@@ -98,15 +98,15 @@ public class GenDepotTrx_FP {
 		} else if ( type == SecuritiesAccountTransactionManager_FP.Type.DIVIDEND ) {
 			trx = SecuritiesAccountTransactionManager_FP
 					.genDividDistribTrx(gcshFile,
-										stockAcctID, incomeAcctID, expensesAcctAmtList, offsetAcctID,
-										GnuCashTransactionSplit.Action.DIVIDEND, divDistrGross, datPst,
-										descr);
+									stockAcctID, incomeAcctID, expensesAcctAmtList, offsetAcctID,
+									GnuCashTransactionSplit.Action.DIVIDEND, divDistrGross, datPst,
+									descr);
 		} else if ( type == SecuritiesAccountTransactionManager_FP.Type.DISTRIBUTION ) {
 			trx = SecuritiesAccountTransactionManager_FP
 					.genDividDistribTrx(gcshFile,
-										stockAcctID, incomeAcctID, expensesAcctAmtList, offsetAcctID,
-										GnuCashTransactionSplit.Action.DIST, divDistrGross, datPst,
-										descr);
+									stockAcctID, incomeAcctID, expensesAcctAmtList, offsetAcctID,
+									GnuCashTransactionSplit.Action.DIST, divDistrGross, datPst,
+									descr);
 		}
 
 		// ---
