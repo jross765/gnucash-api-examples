@@ -73,7 +73,7 @@ public class GetStockDivTrxInfo {
 		System.out.println("Stock acct. split:      " + specTrx.getStockAccountSplit());
 		System.out.println("Income acct. split:     " + specTrx.getIncomeAccountSplit());
 		for ( GnuCashTransactionSplit splt : specTrx.getExpensesSplits() ) {
-			System.out.println("Stock acct. split:      " + splt);
+			System.out.println("Expenses acct. split:   " + splt);
 		}
 		System.out.println("Offsetting acct. split: " + specTrx.getOffsettingAccountSplit());
 		
