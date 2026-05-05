@@ -5,31 +5,30 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.read.GnuCashAccount;
 import org.gnucash.api.read.GnuCashTransactionSplit;
 import org.gnucash.api.write.GnuCashWritableTransaction;
 import org.gnucash.api.write.impl.GnuCashWritableFileImpl;
-import org.gnucash.apiext.secacct.SecuritiesAccountTransactionManager_FP;
+import org.gnucash.apiext.secacct.SecuritiesAccountTransactionManager_BF;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
-import org.gnucash.base.tuples.AcctIDAmountFPPair;
+import org.gnucash.base.tuples.AcctIDAmountBFPair;
 
-import xyz.schnorxoborx.base.numbers.FixedPointNumber;
-
-public class GenDepotTrx_FP {
+public class GenDepotTrx {
 	// BEGIN Example data -- adapt to your needs
     private static String gcshInFileName  = "example_in.gnucash";
     private static String gcshOutFileName = "example_out.gnucash";
 
-	private static SecuritiesAccountTransactionManager_FP.Type type = SecuritiesAccountTransactionManager_FP.Type.DIVIDEND;
+	private static SecuritiesAccountTransactionManager_BF.Type type = SecuritiesAccountTransactionManager_BF.Type.DIVIDEND;
 
 	private static GCshAcctID stockAcctID  = new GCshAcctID( "b3741e92e3b9475b9d5a2dc8254a8111" );
 	private static GCshAcctID incomeAcctID = new GCshAcctID( "d7c384bfc136464490965f3f254313b1" ); // only for dividend, not for buy/sell
-	private static List<AcctIDAmountFPPair> expensesAcctAmtList = new ArrayList<AcctIDAmountFPPair>(); // only for dividend, not for buy/sell
+	private static List<AcctIDAmountBFPair> expensesAcctAmtList = new ArrayList<AcctIDAmountBFPair>(); // only for dividend, not for buy/sell
 	private static GCshAcctID offsetAcctID = new GCshAcctID( "bbf77a599bd24a3dbfec3dd1d0bb9f5c" );
 	
-	private static FixedPointNumber nofStocks      = new FixedPointNumber(15); // only for buy/sell, not for dividend
-	private static FixedPointNumber stockPrc       = new FixedPointNumber("23080/100"); // only for buy/sell, not for dividend
-	private static FixedPointNumber divDistrGross  = new FixedPointNumber("11200/100"); // only for dividend, not for buy/sell
+	private static BigFraction nofStocks      = BigFraction.of(15); // only for buy/sell, not for dividend
+	private static BigFraction stockPrc       = BigFraction.of(23080, 100); // only for buy/sell, not for dividend
+	private static BigFraction divDistrGross  = BigFraction.of(11200, 100); // only for dividend, not for buy/sell
 
 	private static LocalDate datPst = LocalDate.of(2024, 3, 1);
 	private static String descr = "Dividend payment";
@@ -39,7 +38,7 @@ public class GenDepotTrx_FP {
 
 	public static void main(String[] args) {
 		try {
-			GenDepotTrx_FP tool = new GenDepotTrx_FP();
+			GenDepotTrx tool = new GenDepotTrx();
 			tool.kernel();
 		} catch (Exception exc) {
 			System.err.println("Execution exception. Aborting.");
@@ -62,7 +61,7 @@ public class GenDepotTrx_FP {
 				System.err.println("Error: Cannot get account with ID '" + incomeAcctID + "'");
 		}
 
-		for ( AcctIDAmountFPPair elt : expensesAcctAmtList ) {
+		for ( AcctIDAmountBFPair elt : expensesAcctAmtList ) {
 			GnuCashAccount expensesAcct = gcshFile.getAccountByID(elt.accountID());
 			if ( expensesAcct == null )
 				System.err.println("Error: Cannot get account with ID '" + elt.accountID() + "'");
@@ -77,7 +76,7 @@ public class GenDepotTrx_FP {
 			System.err.println("Account 2 name (income):     '" + incomeAcct.getQualifiedName() + "'");
 
 		int counter = 1;
-		for ( AcctIDAmountFPPair elt : expensesAcctAmtList ) {
+		for ( AcctIDAmountBFPair elt : expensesAcctAmtList ) {
 			GnuCashAccount expensesAcct = gcshFile.getAccountByID(elt.accountID());
 			System.err.println("Account 3." + counter + " name (expenses): '" + expensesAcct.getQualifiedName() + "'");
 			counter++;
@@ -89,20 +88,20 @@ public class GenDepotTrx_FP {
 
 		GnuCashWritableTransaction trx = null;
 		initExpAccts();
-		if ( type == SecuritiesAccountTransactionManager_FP.Type.BUY_STOCK ) {
-			trx = SecuritiesAccountTransactionManager_FP
+		if ( type == SecuritiesAccountTransactionManager_BF.Type.BUY_STOCK ) {
+			trx = SecuritiesAccountTransactionManager_BF
 					.genBuyStockTrx(gcshFile, 
 									stockAcctID, expensesAcctAmtList, offsetAcctID,
 									nofStocks, stockPrc, 
 									datPst, descr);
-		} else if ( type == SecuritiesAccountTransactionManager_FP.Type.DIVIDEND ) {
-			trx = SecuritiesAccountTransactionManager_FP
+		} else if ( type == SecuritiesAccountTransactionManager_BF.Type.DIVIDEND ) {
+			trx = SecuritiesAccountTransactionManager_BF
 					.genDividDistribTrx(gcshFile,
 									stockAcctID, incomeAcctID, expensesAcctAmtList, offsetAcctID,
 									GnuCashTransactionSplit.Action.DIVIDEND, divDistrGross, datPst,
 									descr);
-		} else if ( type == SecuritiesAccountTransactionManager_FP.Type.DISTRIBUTION ) {
-			trx = SecuritiesAccountTransactionManager_FP
+		} else if ( type == SecuritiesAccountTransactionManager_BF.Type.DISTRIBUTION ) {
+			trx = SecuritiesAccountTransactionManager_BF
 					.genDividDistribTrx(gcshFile,
 									stockAcctID, incomeAcctID, expensesAcctAmtList, offsetAcctID,
 									GnuCashTransactionSplit.Action.DIST, divDistrGross, datPst,
@@ -123,13 +122,13 @@ public class GenDepotTrx_FP {
 	// account is not in the test file yet).
 	private void initExpAccts() {
 		GCshAcctID expAcct1 = new GCshAcctID( "2a195872e24048a0a6228107ca8b6a52" ); // Kapitalertragsteuer
-		FixedPointNumber amt1 = divDistrGross.copy().multiply(new FixedPointNumber("25/100"));
-		AcctIDAmountFPPair acctAmtPr1 = new AcctIDAmountFPPair(expAcct1, amt1);
+		BigFraction amt1 = divDistrGross.multiply(BigFraction.of(25, 100));
+		AcctIDAmountBFPair acctAmtPr1 = new AcctIDAmountBFPair(expAcct1, amt1);
 		expensesAcctAmtList.add(acctAmtPr1);
 		
 		GCshAcctID expAcct2 = new GCshAcctID( "41e998de2af144c7a9db5049fb677f8a" ); // Soli
-		FixedPointNumber amt2 = amt1.copy().multiply(new FixedPointNumber("55/1000"));
-		AcctIDAmountFPPair acctAmtPr2 = new AcctIDAmountFPPair(expAcct2, amt2);
+		BigFraction amt2 = amt1.multiply(BigFraction.of(55, 1000));
+		AcctIDAmountBFPair acctAmtPr2 = new AcctIDAmountBFPair(expAcct2, amt2);
 		expensesAcctAmtList.add(acctAmtPr2);
 	}
 }
