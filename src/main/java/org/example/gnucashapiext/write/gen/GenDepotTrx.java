@@ -16,8 +16,8 @@ import org.gnucash.base.tuples.AcctIDAmountBFPair;
 
 public class GenDepotTrx {
 	// BEGIN Example data -- adapt to your needs
-    private static String gcshInFileName  = "example_in.gnucash";
-    private static String gcshOutFileName = "example_out.gnucash";
+	private static String gcshInFileName  = "example_in.gnucash";
+	private static String gcshOutFileName = "example_out.gnucash";
 
 	private static SecuritiesAccountTransactionManager_BF.Type type = SecuritiesAccountTransactionManager_BF.Type.DIVIDEND;
 
@@ -91,6 +91,12 @@ public class GenDepotTrx {
 		if ( type == SecuritiesAccountTransactionManager_BF.Type.BUY_STOCK ) {
 			trx = SecuritiesAccountTransactionManager_BF
 					.genBuyStockTrx(gcshFile, 
+									stockAcctID, expensesAcctAmtList, offsetAcctID,
+									nofStocks, stockPrc, 
+									datPst, descr);
+		} else if ( type == SecuritiesAccountTransactionManager_BF.Type.SELL_STOCK ) {
+			trx = SecuritiesAccountTransactionManager_BF
+					.genSellStockTrx(gcshFile, 
 									stockAcctID, expensesAcctAmtList, offsetAcctID,
 									nofStocks, stockPrc, 
 									datPst, descr);
