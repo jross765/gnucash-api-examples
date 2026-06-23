@@ -89,13 +89,13 @@ public class GetCustInfo {
 
 		System.out.println("");
 		try {
-			System.out.println("Discount:          " + cust.getDiscount());
+			System.out.println("Discount:          " + cust.getDiscountRat());
 		} catch (Exception exc) {
 			System.out.println("Discount:          " + "ERROR");
 		}
 
 		try {
-			System.out.println("Credit:            " + cust.getCredit());
+			System.out.println("Credit:            " + cust.getCreditRat());
 		} catch (Exception exc) {
 			System.out.println("Credit:            " + "ERROR");
 		}
